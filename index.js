@@ -1,70 +1,64 @@
-var Vibrancy = require('bindings')('Vibrancy');
+const Vibrancy = require('bindings')('Vibrancy');
 
 module.exports = require('bindings')('Vibrancy');
 
-function AddView(buffer,options) {
-	var viewOptions = {
-		Material: options.Material,
+const addView = (buffer, options) => {
+
+	const viewOptions = {
 		Position: { x: options.X, y: options.Y},
 		Size: { width: options.Width, height: options.Height},
-		ResizeMask: options.ResizeMask
-	}
-	return Vibrancy.AddView(buffer,viewOptions);
-}
+		...options
+	};
 
-function RemoveView(buffer,viewId) {
-	var viewOptions = { ViewId: (viewId) };
-    return Vibrancy.RemoveView(buffer, viewOptions);
-}
+	return Vibrancy.AddView(buffer, viewOptions);
 
-function UpdateView(buffer,options) {
-	var viewOptions = {
-		Material: options.Material,
+};
+
+const removeView = (buffer, ViewId) => Vibrancy.RemoveView(buffer, {ViewId});
+
+const updateView = (buffer, options) => {
+
+	const viewOptions = {
 		Position: { x: options.X, y: options.Y},
 		Size: { width: options.Width, height: options.Height},
-		ViewId: options.ViewId
-	}
-	return Vibrancy.UpdateView(buffer,viewOptions);
-}
+		...options
+	};
 
-function DisableVibrancy(buffer) {
-	Vibrancy.SetVibrancy(false,buffer);
-}
+	return Vibrancy.UpdateView(buffer, viewOptions);
+
+};
+
+const disableVibrancy = buffer => Vibrancy.SetVibrancy(false, buffer);
 
 module.exports = {
-	SetVibrancy: function(window,material) {
-		if(window == null)
-			return -1;
+
+	setVibrancy: (window, Material) => {
+
+		if (!window) return -1;
+		if (!Material) Material = 0;
 		
-		var width = window.getSize()[0];
-		var height = window.getSize()[1];
+		const Width = window.getSize()[0];
+		const Height = window.getSize()[1];
 
-		if(material === null || typeof material === 'undefined')
-			material = 0;
-
-		var resizeMask = 2; //auto resize on both axis
-
-		var viewOptions = {
-			Material: material,
-			Width: width,
-			Height: height,
+		const viewOptions = {
+			Material,
+			Width,
+			Height,
 			X: 0,
 			Y:0,
-			ResizeMask: resizeMask
-		}
+			ResizeMask: 2
+		};
 
-		return AddView(window.getNativeWindowHandle(),viewOptions);
+		return addView(window.getNativeWindowHandle(), viewOptions);
+
 	},
-	AddView: function(window,options) {
-		return AddView(window.getNativeWindowHandle(),options);
-	},
-	UpdateView: function(window,options) {
-		return UpdateView(window.getNativeWindowHandle(),options);
-	},
-	RemoveView: function(window,viewId) {
-		return RemoveView(window.getNativeWindowHandle(),viewId);
-	},
-	DisableVibrancy: function(window) {
-		return DisableVibrancy(window.getNativeWindowHandle());
-	}
-}
+
+	addView: (window, options) => addView(window.getNativeWindowHandle(), options),
+
+	updateView: (window, options) => updateView(window.getNativeWindowHandle(), options),
+
+	removeView: (window,viewId) => removeView(window.getNativeWindowHandle(), viewId),
+
+	disableVibrancy: window => disableVibrancy(window.getNativeWindowHandle())
+
+};

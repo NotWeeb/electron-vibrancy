@@ -6,7 +6,17 @@
 ![](https://img.shields.io/npm/dm/electron-vibrancy.svg)
 ![](https://david-dm.org/arkenthera/electron-vibrancy/status.svg)
 
-# As of [#7898](https://github.com/electron/electron/pull/7898) Vibrancy is now supported in Electron for *macOS*.
+<br>
+
+# *Changes by NotWeeb7777:*
+Changes were made as more of an aesthetic thing rather than functional.
+- Renamed all methods to be lowercase.
+- Organised and made some code pretty.
+- ES6+ stuff.
+
+<br>
+<br>
+<br>
 
 This module is intended to give an [Electron](https://github.com/electron/electron) BrowserWindow blur on its behind. Electron does not support 'blur behind' from a transparent window and this module uses native API calls to achieve the effect.
 
