@@ -4,31 +4,29 @@ module.exports = require('bindings')('Vibrancy');
 
 const addView = (buffer, options) => {
 
-	const viewOptions = {
+	const viewOptions = Object.assign({
 		Position: { x: options.X, y: options.Y},
-		Size: { width: options.Width, height: options.Height},
-		...options
-	};
+		Size: { width: options.Width, height: options.Height}
+	}, options)
 
 	return Vibrancy.AddView(buffer, viewOptions);
 
-};
+}
 
-const removeView = (buffer, ViewId) => Vibrancy.RemoveView(buffer, {ViewId});
+const removeView = (buffer, ViewId) => Vibrancy.RemoveView(buffer, {ViewId})
 
 const updateView = (buffer, options) => {
 
-	const viewOptions = {
+	const viewOptions = Object.assign({
 		Position: { x: options.X, y: options.Y},
-		Size: { width: options.Width, height: options.Height},
-		...options
-	};
+		Size: { width: options.Width, height: options.Height}
+	}, options)
 
-	return Vibrancy.UpdateView(buffer, viewOptions);
+	return Vibrancy.UpdateView(buffer, viewOptions)
 
-};
+}
 
-const disableVibrancy = buffer => Vibrancy.SetVibrancy(false, buffer);
+const disableVibrancy = buffer => Vibrancy.SetVibrancy(false, buffer)
 
 module.exports = {
 
@@ -61,4 +59,4 @@ module.exports = {
 
 	disableVibrancy: window => disableVibrancy(window.getNativeWindowHandle())
 
-};
+}
